@@ -1,0 +1,16 @@
+symbol,stock_name,price,open_price,prev_close,change,change_percent,last_update,premarket_change,premarket_diff
+TSLA:NASDAQ,Tesla Inc,214.65,210.03,209.98,4.67,2.224,2023-11-11 01:30:00,-0.05,Decrease
+RIVN:NASDAQ,Rivian Automotive Inc,15.4,15.42,15.33,0.07,0.4566,2023-11-11 01:30:00,-0.09,Decrease
+AEHR:NASDAQ,Aehr Test Systems,24.5,23.4,23.18,1.32,5.6946,2023-11-11 01:30:00,-0.22,Decrease
+ON:NASDAQ,ON Semiconductor Corp,67.38,65.5,64.35,3.03,4.7086,2023-11-11 01:30:00,-1.15,Decrease
+VFS:NASDAQ,VinFast Auto Ltd,6.07,6.37,6.49,-0.42,-6.4715,2023-11-11 01:30:00,0.12,Increase
+TSLA:NASDAQ,Tesla Inc,217.66,215.6,214.65,3.01,1.4023,2023-11-13 15:14:10,-0.95,Decrease
+RIVN:NASDAQ,Rivian Automotive Inc,15.84,15.35,15.4,0.44,2.8571,2023-11-13 15:14:17,0.05,Increase
+AEHR:NASDAQ,Aehr Test Systems,23.37,24.11,24.5,-1.13,-4.6122,2023-11-13 15:14:22,0.39,Increase
+ON:NASDAQ,ON Semiconductor Corp,66.28,66.37,67.38,-1.1,-1.6325,2023-11-13 15:14:20,1.01,Increase
+VFS:NASDAQ,VinFast Auto Ltd,5.79,6.07,6.07,-0.28,-4.6129,2023-11-13 15:14:09,0.00,No difference
+TSLA:NASDAQ,Tesla Inc,234.74,235.13,223.71,11.03,4.9305,2023-11-14 14:43:19,-11.42,Decrease
+RIVN:NASDAQ,Rivian Automotive Inc,16.9432,16.85,16.19,0.7532,4.6522,2023-11-14 14:43:29,-0.66,Decrease
+AEHR:NASDAQ,Aehr Test Systems,24.72,24.4999,23.4,1.32,5.641,2023-11-14 14:43:39,-1.10,Decrease
+ON:NASDAQ,ON Semiconductor Corp,70.02,69.35,66.65,3.37,5.0563,2023-11-14 14:43:38,-2.70,Decrease
+VFS:NASDAQ,VinFast Auto Ltd,6.07,6.11,5.9,0.17,2.8814,2023-11-14 14:43:46,-0.21,Decrease
