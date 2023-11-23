@@ -9,6 +9,6 @@ try:
   raw_stock_data = extract(STOCK_TICKERS, True)
   transformed_stock_data = transform(raw_stock_data, True)
   load(transformed_stock_data, "transformed_stock_data")
-  logging.info("Successfully extracted, transformed and loaded data.")  # Log a success message
+  logging.info("Successfully executed ETL Pipeline")  # Log a success message
 except Exception as e:
   logging.error(f'Pipeline failed with error: {e}') # Log a failure message
