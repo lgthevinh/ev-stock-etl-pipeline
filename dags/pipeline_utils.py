@@ -74,8 +74,14 @@ def transform(raw_data, breakpoint = False):
 
 def load(cleaned_data: pd.DataFrame, table: str, test_mode = False):
   try:
-    cleaned_data.to_sql(table, db_engine, if_exists="append", index=False)
-    logging.info(f'Successfully load data to {table} table')
+    to_validate = pd.read_sql(f'SELECT * FROM {table}', db_engine)
+    to_validate["last_update"] = pd.to_datetime(to_validate["last_update"])
+    cleaned_data["last_update"] = pd.to_datetime(cleaned_data["last_update"])
+    if cleaned_data["last_update"].isin(to_validate["last_update"]).any(): # Check if there is any duplicated data --> if yes, do not load
+      logging.info(f'No new data to load to {table} table')
+    else:
+      cleaned_data.to_sql(table, db_engine, if_exists="append", index=False)
+      logging.info(f'Successfully load data to {table} table')
     if test_mode:
       return True
   except Exception as e:

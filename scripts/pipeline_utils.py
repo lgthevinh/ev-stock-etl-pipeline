@@ -8,7 +8,7 @@ logging.basicConfig(filename="./logs/etl_log.txt", format='[%(asctime)s] [%(leve
 # Pre-define all constants needed
 URL = "https://real-time-finance-data.p.rapidapi.com/stock-quote"       # API get from RapidAPI (https://rapidapi.com/letscrape-6bRBa3QguO5/api/real-time-finance-data/)
 headers = {
-	"X-RapidAPI-Key": "edc324b76amsh18694ec0036148fp12050ejsn13798df8b2a0",
+	"X-RapidAPI-Key": "e2ffeb54aemsh5968fd3b770a4c9p164705jsn6e9fb2167119",
 	"X-RapidAPI-Host": "real-time-finance-data.p.rapidapi.com"
 }
 
@@ -58,10 +58,11 @@ def transform(raw_data, breakpoint = False):
     transformed_data = raw_data.loc[:, ["symbol", "stock_name", "price", "open_price", "prev_close", "change", "change_percent", "last_update"]]
     transformed_data["premarket_change"] = transformed_data.apply(classify_change, axis=1)
     transformed_data["premarket_diff"] = transformed_data.apply(classify_diff, axis=1)
+    transformed_data["last_update"] = pd.to_datetime(transformed_data["last_update"]).dt.strftime("%Y-%m-%d")
     logging.info("Successfully transform data")
     if breakpoint: # breakpoint is used to save the transformed data to a csv file for testing purpose, ONLY USE IN TEST MODE
       try:
-        transformed_data.to_csv("./data/processed/transformed_stock_data.csv", index=True, header=False, mode="a")
+        transformed_data.to_csv("./data/processed/transformed_stock_data.csv", index=False, header=False, mode="a")
         logging.info(f'Successfully save raw data breakpoint in "/data/processed/transformed_stock_data.csv"')
       except:
         logging.warning(f'Failed to save transformed data breakpoint')
@@ -72,8 +73,14 @@ def transform(raw_data, breakpoint = False):
 
 def load(cleaned_data: pd.DataFrame, table: str, test_mode = False):
   try:
-    cleaned_data.to_sql(table, db_engine, if_exists="append", index=False)
-    logging.info(f'Successfully load data to {table} table')
+    to_validate = pd.read_sql(f'SELECT * FROM {table}', db_engine)
+    to_validate["last_update"] = pd.to_datetime(to_validate["last_update"])
+    cleaned_data["last_update"] = pd.to_datetime(cleaned_data["last_update"])
+    if cleaned_data["last_update"].isin(to_validate["last_update"]).any(): # Check if there is any duplicated data --> if yes, do not load
+      logging.info(f'No new data to load to {table} table')
+    else:
+      cleaned_data.to_sql(table, db_engine, if_exists="append", index=False)
+      logging.info(f'Successfully load data to {table} table')
     if test_mode:
       return True
   except Exception as e:
